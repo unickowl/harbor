@@ -208,6 +208,8 @@ Adopt a Steve Jobs-inspired design standard — pursue the highest level of UI/U
 
 **Reference**: Apply Nielsen Norman Group (nngroup.com) UX principles — including Jakob's usability heuristics, information architecture best practices, and evidence-based interaction design patterns — as the authoritative foundation for all design decisions.
 
+**Styling rule**: Prefer Tailwind CSS over raw CSS properties. Use utility classes in templates or `@apply` directives in `<style scoped>` blocks. Only write raw CSS when Tailwind cannot express the requirement. This ensures consistent styling conventions across the codebase.
+
 **Design review standard**: For every UI change, ask — "Would Steve Jobs be satisfied with this interface?"
 
 ### Documentation Requirements
