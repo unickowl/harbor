@@ -194,6 +194,22 @@ Before making changes:
 - **API response times**: Target < 200ms for standard endpoints
 - **Caching strategies**: Redis for backend, TanStack Query for frontend
 
+### Frontend Design Philosophy
+
+Adopt a Steve Jobs-inspired design standard — pursue the highest level of UI/UX craftsmanship:
+
+- **Intuitive by default**: Interfaces should be self-explanatory. If users need instructions, the design has failed
+- **Information symmetry**: Eliminate information asymmetry — users must always know the system state, the result of their actions, and what to do next
+- **Design by subtraction**: Continuously ask "Is this element truly necessary?" Remove all visual noise and functional redundancy that doesn't add value
+- **Consistent experience**: Identical interaction patterns must remain consistent throughout the product, allowing users to build reliable mental models
+- **Details define quality**: Transitions, spacing rhythm, color hierarchy, typography — every micro-detail shapes the overall perceived quality
+- **Prevent errors, don't just handle them**: Eliminate the possibility of user mistakes through design, rather than relying on error messages after the fact
+- **User-centric thinking**: Always reason from the user's perspective, never from the convenience of technical implementation
+
+**Reference**: Apply Nielsen Norman Group (nngroup.com) UX principles — including Jakob's usability heuristics, information architecture best practices, and evidence-based interaction design patterns — as the authoritative foundation for all design decisions.
+
+**Design review standard**: For every UI change, ask — "Would Steve Jobs be satisfied with this interface?"
+
 ### Documentation Requirements
 - **Code self-documentation**: Write clear, expressive code
 - **API documentation**: Maintain up-to-date API contracts
