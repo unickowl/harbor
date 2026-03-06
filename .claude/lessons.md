@@ -34,3 +34,32 @@
 2. Check if the component's existing props/variants can achieve the desired look
 3. Only write custom elements when PrimeVue genuinely cannot express the requirement
 4. This applies to ALL UI elements, not just complex ones
+
+## 2026-03-06: Plans and Docs for API/Admin Go in harbor/, Not in the Project
+
+**Mistake**: Created `api/docs/plans/` for an API implementation plan. User's rule clearly states plans for API or Admin should live in `harbor/` (the umbrella repo), never inside the individual project directories.
+
+**Root cause**: Followed the writing-plans skill's default path (`docs/plans/`) without checking CLAUDE.md's OpenSpec Location Rules.
+
+**Rule**:
+1. **Portal-only** changes: plan can go in `portal/` or `harbor/`
+2. **API or Admin** changes: plan MUST go in `harbor/` — never create docs/openspec inside `api/` or `admin/`
+3. **Cross-project** changes: always in `harbor/`
+4. User-defined rules in CLAUDE.md ALWAYS override skill template defaults
+5. New API endpoints = new capabilities = MUST use OpenSpec, not freeform plans
+6. ALWAYS check OpenSpec trigger conditions in CLAUDE.md BEFORE choosing a planning approach — skills like writing-plans do NOT replace OpenSpec when OpenSpec applies
+
+## 2026-03-06: Write Tests That Protect Business Logic, Not Framework Behavior
+
+**Mistake**: Wrote 8 test cases including auth checks (testing Laravel middleware), a list test that only verified JSON structure, and a beneficiary info test with 13 redundant field assertions that overlapped with another test.
+
+**Root cause**: Writing tests mechanically to "cover" endpoints rather than thinking about what risks each test is actually protecting against.
+
+**Rule — Every test must answer: "What real bug or security issue would this catch?"**
+
+1. **Don't test framework guarantees** — auth middleware, CSRF, route model binding are Laravel's responsibility. Unless you manually moved a route outside middleware, testing `assertStatus(401)` is noise.
+2. **Test security boundaries** — cross-application data access, sensitive data exclusion (AML), authorization scoping. These protect against real vulnerabilities.
+3. **Test transformation logic** — null filtering (`array_filter`), conditional field inclusion, data restructuring. These are your custom Resource logic where bugs actually happen.
+4. **Test data isolation** — "list only returns own application's transfers" is valuable; "list returns 200 with some fields" is not.
+5. **Don't duplicate coverage** — if two tests both exercise the same function (`getBeneficiaryInfo`), keep the one testing the edge case (null omission), not the one asserting 13 happy-path field mappings.
+6. **Fragile assertions are red flags** — `assertCount(2)` that depends on setUp state, exact field-by-field matching that breaks on any schema change. Prefer behavioral assertions over structural ones.
